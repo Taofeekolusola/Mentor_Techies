@@ -1,6 +1,9 @@
 const { Application } = require('../models/Application');
 const { Job } = require('../models/Job');
 
+//desc apply for job role
+//route POST /applications/apply
+//access private
 const applyForJob = async (req, res) => {
   try {
     // getting jobId from the request body
@@ -39,6 +42,9 @@ const applyForJob = async (req, res) => {
   }
 };
 
+//desc get total application count
+//route POST /applications/total
+//access private
 const getTotalApplications = async (req, res) => {
     try {
       const userId = req.user.id;
@@ -53,6 +59,9 @@ const getTotalApplications = async (req, res) => {
     }
 };
   
+//desc get total pending applications count
+//route POST /applications/pending
+//access private
 const getTotalPendingApplications = async (req, res) => {
     try {
       const userId = req.user.id;
@@ -70,6 +79,9 @@ const getTotalPendingApplications = async (req, res) => {
     }
 };
   
+//desc get total rejected applications count
+//route POST /applications/pending
+//access private
 const getTotalRejectedApplications = async (req, res) => {
     try {
       const userId = req.user.id;
@@ -87,6 +99,9 @@ const getTotalRejectedApplications = async (req, res) => {
     }
 };
   
+//desc get total accepted applications count
+//route POST /applications/pending
+//access private
 const getTotalAcceptedApplications = async (req, res) => {
     try {
       const userId = req.user.id;

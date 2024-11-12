@@ -2,14 +2,13 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models/User');
 const config = require('../config/config');
-//const nodemailer = require('nodemailer');
-
+const nodemailer = require('nodemailer');
 
 //desc register a user
 //route post /auth/register
 //access public
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+const { name, email, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -21,18 +20,21 @@ const register = async (req, res) => {
     // Create a new user
     const user = await User.create({ name, email, password });
     
+    // Ensures name is provided ad that it's a string
     if (!name || typeof name !== 'string') { 
       return res.status(400).json({
         message: 'Invalid name. Name is required and it must be a string.'
       });
     }
-
+    
+    // Ensures email is provided ad that it's a string and contains '@'
     if (!email || typeof email!== 'string' ||!email.includes('@')) { 
       return res.status(400).json({
         message: 'Invalid email. Email is required and it must be a valid email address.'
       });
     }
 
+    // Ensures password is provided ad that it's a string and at least 8 characters long
     if (!password || typeof password!== 'string' || password.length < 8) { 
       return res.status(400).json({
         message: 'Invalid password. Password is required and it must be at least 8 characters long.'
@@ -63,19 +65,22 @@ const updateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, email, password } = req.body;
-  
+    
+    // Ensures name is provided ad that it's a string
     if (!name || typeof name !== 'string') { 
       return res.status(400).json({
         message: 'Invalid name. Name is required and it must be a string.'
       });
     }
-  
+    
+    // Ensures email is provided ad that it's a string and contains '@'
     if (!email || typeof email!== 'string' ||!email.includes('@')) { 
       return res.status(400).json({
         message: 'Invalid email. Email is required and it must be a valid email address.'
       });
     }
-  
+    
+    // Ensures password is provided ad that it's a string and at least 8 characters long
     if (!password || typeof password!== 'string' || password.length < 8) { 
       return res.status(400).json({
         message: 'Invalid password. Password is required and it must be at least 8 characters long.'
@@ -129,7 +134,7 @@ const deleteUser = async (req, res) => {
             msg: 'Invalid user id, id must be a string'
         });
     }
-
+    console.log("===========", typeof id)
     const user = await User.findByPk(id) 
 
     if (!user) {
@@ -145,6 +150,20 @@ const deleteUser = async (req, res) => {
     });
 }
 }
+
+//desc get total user
+//route GET /auth/total
+//access private
+const getTotalUsers = async (req, res) => {
+  try {
+    // Use Sequelize's count method to get the total number of users
+    const totalUsers = await User.count();
+    res.status(200).json({ totalUsers });
+  } catch (error) {
+    console.error("Error fetching total users:", error);
+    res.status(500).json({ error: "An error occurred while fetching the total number of users" });
+  }
+};
 
 //desc login a user
 //route post /auth/login
@@ -180,22 +199,22 @@ const login = async (req, res) => {
 //access private
 
 const sendEmail = async (email, resetLink) => {
-  // const transporter = nodemailer.createTransport({
-  //   service: 'gmail',  // Use your email provider's settings
-  //   auth: {
-  //     user: 'your-email@gmail.com',  // Your email
-  //     pass: 'your-email-password',   // Your email password
-  //   },
-  // });
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'your-email@gmail.com',
+      pass: 'your-email-password',
+    },
+  });
 
-  // const mailOptions = {
-  //   from: 'your-email@gmail.com',
-  //   to: email,
-  //   subject: 'Password Reset Request',
-  //   html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
-  // };
+  const mailOptions = {
+    from: 'your-email@gmail.com',
+    to: email,
+    subject: 'Password Reset Request',
+    html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
+  };
 
-  // await transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions);
   
   // implement actual email sending in production.
   console.log("reset link " , resetLink)
@@ -226,6 +245,9 @@ const requestPasswordReset = async (req, res) => {
   }
 };
 
+//desc resets a user password
+//route post /auth/reset
+//access private
 const resetPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
@@ -263,4 +285,5 @@ module.exports = {
   resetPassword,
   deleteUser,
   updateUserProfile,
+  getTotalUsers,
 };

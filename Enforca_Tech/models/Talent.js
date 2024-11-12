@@ -24,7 +24,7 @@ const Talent = sequelize.define('Talent', {
     onDelete: 'CASCADE',
   },
     expertise: { 
-      type: DataTypes.ENUM('Product Designer', 'Software Developer', 'Data Analyst') 
+      type: DataTypes.ENUM('Product Designer', 'Software Developer', 'Data Scientist', 'UX/UI Designer') 
   }
 }, {
   timestamps: true

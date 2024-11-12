@@ -4,7 +4,7 @@ const sequelize = require('../db');
 const Talent = sequelize.define('Talent', {
   id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     primaryKey: true,
     autoIncrement: true
   },

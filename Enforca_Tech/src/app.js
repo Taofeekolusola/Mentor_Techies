@@ -7,6 +7,7 @@ const jobRoutes = require('../routes/jobRoute');
 const searchRoutes = require('../routes/searchRoute');
 const taskRoutes = require('../routes/taskRoute');
 const uploadRoutes = require('../routes/uploadCvRoute');
+const applicationRoutes = require('../routes/applicationRoute');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use('/jobs', jobRoutes);
 app.use('/search', searchRoutes);
 app.use('/tasks', taskRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/applications', applicationRoutes);
 
 module.exports = app;

@@ -34,9 +34,10 @@ const User = sequelize.define('User', {
 
 // Associations
 User.associate = (models) => {
-  User.hasMany(models.Application, { foreignKey: 'userId' });
-  User.hasMany(models.Job, { foreignKey: 'userId' });
-  User.hasMany(models.Talent, { foreignKey: 'userId' });
+  User.hasMany(models.Application, { foreignKey: 'userId', as: 'application' });
+  User.hasMany(models.Job, { foreignKey: 'userId', as: 'job' });
+  User.hasMany(models.Talent, { foreignKey: 'userId', as: 'talent' });
+  User.hasMany(models.Interview, { foreignKey: 'userId', as: 'interviews' });
 };
 
 module.exports = { User };

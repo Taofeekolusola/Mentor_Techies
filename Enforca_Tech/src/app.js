@@ -9,6 +9,7 @@ const taskRoutes = require('../routes/taskRoute');
 const uploadRoutes = require('../routes/uploadCvRoute');
 const applicationRoutes = require('../routes/applicationRoute');
 const talentRoutes = require('../routes/talentRoute');
+const interviewRoutes = require('../routes/interviewRoute');
 
 const app = express();
 
@@ -32,5 +33,6 @@ app.use('/tasks', taskRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/applications', applicationRoutes);
 app.use('/talents', talentRoutes);
+app.use('/interviews', interviewRoutes);
 
 module.exports = app;

@@ -59,8 +59,6 @@ const { name, email, password } = req.body;
 //desc update user profile
 //route PUT /auth/delete
 //access private
-
-
 const updateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -124,7 +122,6 @@ const updateUserProfile = async (req, res) => {
 //desc delete user profile
 //route DELETE /auth/delete
 //access private
-
 const deleteUser = async (req, res) => { 
   try {
     const { id } = req.params
@@ -197,7 +194,6 @@ const login = async (req, res) => {
 //desc resets user's password
 //route
 //access private
-
 const sendEmail = async (email, resetLink) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -220,7 +216,9 @@ const sendEmail = async (email, resetLink) => {
   console.log("reset link " , resetLink)
 };
 
-// API to request password reset (send reset link)
+//desc request password reset (send reset link)
+//route
+//access private
 const requestPasswordReset = async (req, res) => {
   try {
     const { email } = req.body;

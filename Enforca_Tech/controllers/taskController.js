@@ -2,6 +2,8 @@ const { Task } = require('../models/Task');
 const { Op } = require('sequelize');
 
 // Create a new task
+//route POST /tasks
+//access private
 const createTask = async (req, res) => {
   try {
     const { title, description, dueDate, priority } = req.body;
@@ -21,7 +23,9 @@ const createTask = async (req, res) => {
   }
 };
 
-// Get daily tasks for the user
+//desc Get daily tasks for the user
+//route GET /tasks/daily
+//access private
 const getDailyTasksCount = async (req, res) => {
   try {
     const userId = req.user.id;
